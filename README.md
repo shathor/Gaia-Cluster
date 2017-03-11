@@ -19,11 +19,19 @@ in our Galaxy and throughout the Local Group. This amounts to about 1 per cent o
 ### Setup
 
 This setup focuses on a single node test cluster for your local machine. Using:
+* Java 8
+  * [Oracle](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+  * [OpenJDK Windows](https://developers.redhat.com/products/openjdk/download/)
+  * [OpenJDK Linux/Mac](http://openjdk.java.net/install/index.html)
 
 * [Maven](https://maven.apache.org/) - Project and dependency management, build tool
-* [Apache Cassandra](http://cassandra.apache.org/) - A disributed, scalable NoSQL database
-  * For Windows user I recommend [Datastax](https://www.datastax.com/2012/01/getting-started-with-apache-cassandra-on-windows-the-easy-way)
+  * Windows users: Add Maven to PATH environment variables: Run cmd as Administrator > setx /M PATH "%PATH%;\<path-to-Maven-bin-directory>"
+* [Apache Cassandra](http://cassandra.apache.org/) - A distributed, scalable NoSQL database
+  * Windows users: I recommend installing from [Datastax](https://www.datastax.com/2012/01/getting-started-with-apache-cassandra-on-windows-the-easy-way)
+  * Windows users: Make sure the service is running: Windows + R > services.msc > DataStax DDC Server 3.9.0 > Start
 * [Apache Spark](http://spark.apache.org/) - A fast and general engine for large-scale data processing. Used as dependency, no need for installation.
+* Checkout or download this project
+* Run `mvn clean install` on the top level directory to build it
 
 ### Data Import
 ESA released the first catalogue [Gaia DR 1](https://www.cosmos.esa.int/web/gaia/release) the 14 September 2016.
@@ -92,7 +100,7 @@ private long selectCount(JavaSparkContext sc) {
 	String keyspace = Config.cassandra().keyspace();
 	String table = Config.cassandra().gaiasource();
 	return javaFunctions(sc)
-			.cassandraTable(keyspace, table, new SolutionRowReaderFactory(Field.SOLUTION_ID)) // using one of the primary key's.
+			.cassandraTable(keyspace, table, new SolutionRowReaderFactory(Field.SOLUTION_ID)) // using one of the primary keys.
 			.count();
 }
 ```
@@ -104,7 +112,7 @@ List<Field<?>> fields = Arrays.asList(Field.REF_EPOCH, Field.MATCHED_OBSERVATION
 
 #### In case you need all fields of a solution (one complete row):
 ``` java
-List<Field<?>> fields = Fields.values();
+List<Field<?>> fields = Arrays.asList(Field.values());
 ```
 
 
@@ -140,16 +148,23 @@ Note that the JavaRDD class by Apache Spark allows all kinds of map-reduce funct
 
 #### Getting the desired values from returned solutions, there are two ways (Logging may only work on local machine):
 ``` java
-//  calling getters on solution
+// calling getters on solution
 for(Solution solution : solutions) {
     LOG.info("Galactic Latitude: " + solution.getGalacticLatitude());
 }
 
 // calling get on the desired Field and passing the solution
-
 for(Solution solution : solutions) {
     LOG.info("Galactic Latitude: " + Field.B.get(solution)); // Field.B is the galactic latitude field
 }
+
+// also Field makes generic access possible
+for(Solution solution : solutions) {
+    for(Field<?> field : fields) {
+        LOG.info("Extracted: " + field.get(solution));
+    }
+}
+
 ```
 
 Note that the getters will return null, if they were not selected explicitely in the query (for performance reasons).
