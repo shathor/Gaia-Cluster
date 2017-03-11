@@ -12,13 +12,15 @@ Gaia will provide unprecedented positional and radial velocity measurements with
 in our Galaxy and throughout the Local Group. This amounts to about 1 per cent of the Galactic stellar population.
 [[Source]](http://sci.esa.int/gaia/)
 
+## Gaia-Cluster
+
 ### Setup
 
 This setup focuses on a single node test cluster for your local machine. Using:
 
 * [Maven](https://maven.apache.org/) - Project and dependency management, build tool
 * [Apache Cassandra](http://cassandra.apache.org/) - A disributed, scalable NoSQL database
-..* For Windows user I recommend (Datastax)[https://www.datastax.com/2012/01/getting-started-with-apache-cassandra-on-windows-the-easy-way]
+  * For Windows user I recommend (Datastax)[https://www.datastax.com/2012/01/getting-started-with-apache-cassandra-on-windows-the-easy-way]
 * [Apache Spark](http://spark.apache.org/) - A fast and general engine for large-scale data processing. Used as dependency, no need for installation.
 
 ### Data Import
@@ -48,7 +50,7 @@ Note that no checks are made for completeness or data integrity.
 
 For testing you can also setup the Cassandra database with some test data by using the Cassandra CQL Shell. An example script can be found in the [data folder](../blob/master/src/main/resources/data/cassandra_init.txt).
 
-*** Configuration
+### Configuration
 
 The cluster connections are configured in the [application.yaml](../blob/master/src/main/resources/config/application.yaml). It is both relevant for the cluster and the data importer:
 
@@ -64,10 +66,10 @@ cassandra:
   gaiasource: gaia_source
  ```
 
-*** Executing queries
+### Executing queries
 The [GaiaClusterDemo](../blob/master/src/main/java/GaiaClusterDemo.java) shows how to start a Apache Spark context and some examples of querying the data.
 
-* Starting the Apache Spark context:
+#### Starting the Apache Spark context:
 
 ``` java
 SparkConf sparkConf = new SparkConf();
@@ -82,7 +84,7 @@ try(JavaSparkContext sc = new JavaSparkContext(conf)) {
 		
 ```
 
-* Count all data sets:
+#### Count all data sets:
 ``` java
 private long selectCount(JavaSparkContext sc) {
 	String keyspace = Config.cassandra().keyspace();
@@ -93,18 +95,18 @@ private long selectCount(JavaSparkContext sc) {
 }
 ```
 
-* Specify the fields you want to get data from and/or are involved in the query. Restricting fields to a subset will speedup queries:
+#### Specify the fields you want to get data from and/or are involved in the query. Restricting fields to a subset will speedup queries:
 ``` java
 List<Field<?>> fields = Arrays.asList(Field.REF_EPOCH, Field.MATCHED_OBSERVATIONS, Field.L, Field.B);
 ```
 
-* In case you need all fields of a solution (one complete row):
+#### In case you need all fields of a solution (one complete row):
 ``` java
 List<Field<?>> fields = Fields.values();
 ```
 
 
-* Example generic select of fields with a filter function
+#### Example generic select of fields with a filter function
 ``` java
 private List<Solution> select(JavaSparkContext sc, List<Field<?>> fields, Function<Solution, Boolean> filterFunction) {
 	String keyspace = Config.cassandra().keyspace();
@@ -117,23 +119,24 @@ private List<Solution> select(JavaSparkContext sc, List<Field<?>> fields, Functi
 }
 ```
 
-* Example of calling the above `select` method to select all solutions (discouraged on the complete dataset: Would be slow or lead to out-of-memory exception):
+#### Example of calling the above `select` method to select all solutions (discouraged on the complete dataset: Would be slow or lead to out-of-memory exception):
 ``` java
 private List<Solution> selectAll(JavaSparkContext sc) {
 	return select(sc, Arrays.asList(Field.values()), (Solution solution) -> true);
 }
 ```
 
-* Example of calling the above `select` method to select solutions that were observed 42 times (never tested on full dataset, might also lead to out-of-memory exception):
+#### Example of calling the above `select` method to select solutions that were observed 42 times (never tested on full dataset, might also lead to out-of-memory exception):
 ``` java
 private List<Solution> selectMatchedObservations42(JavaSparkContext sc, List<Field<?>> fields) {
 	Function<Solution, Boolean> filterFunction = (Solution solution) -> Objects.equals(solution.getMatchedObservations(), 42);
 	return select(sc, fields, filterFunction);
 }
+```
 
 Note that the JavaRDD class by Apache Spark allows all kinds of map-reduce functionality beyond select or filter.
 
-* Getting the desired values from returned solutions, there are two ways (Logging may only work on local machine):
+#### Getting the desired values from returned solutions, there are two ways (Logging may only work on local machine):
 ``` java
 //  calling getters on solution
 for(Solution solution : solutions) {
@@ -149,7 +152,7 @@ for(Solution solution : solutions) {
 
 Note that the getters will return null, if they were not selected explicitely in the query (for performance reasons).
 
-* Inserting solutions into Cassandra (for intermediate results and to persist results in a distributed cluster context):
+#### Inserting solutions into Cassandra (for intermediate results and to persist results in a distributed cluster context):
 ``` java
 private static void insertSolution(JavaSparkContext sc, List<Solution> solutions) {
 	JavaRDD<Solution> rdd = sc.parallelize(solutions);
