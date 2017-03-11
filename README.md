@@ -1,5 +1,7 @@
 # Gaia-Cluster
 
+![alt text](../master/src/main/resources/gaia.gif "Gaia")
+
 ## Description
 
 Provides a scaffold to build and develop a cluster to query the data from ESA's Gaia satellite. The cluster uses open-source technology: Apache Spark as the data process engine
