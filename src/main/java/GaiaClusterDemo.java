@@ -52,8 +52,7 @@ public class GaiaClusterDemo implements Serializable {
         // only Fields that are specified are extracted, get all Fields with Field.values()
         List<Field<?>> fields = Arrays.asList(Field.REF_EPOCH, Field.MATCHED_OBSERVATIONS, Field.L, Field.B);
 
-        Function<Solution, Boolean> filterFunction = (Solution solution) -> Objects.equals(solution.getMatchedObservations(), 42);
-        List<Solution> solutions = select(sc, fields, filterFunction);
+        List<Solution> solutions = selectMatchedObservations42(sc, fields);
 
         printResult(solutions, fields);
 
@@ -84,6 +83,11 @@ public class GaiaClusterDemo implements Serializable {
         return javaFunctions(sc)
                 .cassandraTable(keyspace, table, new SolutionRowReaderFactory(Field.SOLUTION_ID))
                 .count();
+    }
+
+    private List<Solution> selectMatchedObservations42(JavaSparkContext sc, List<Field<?>> fields) {
+        Function<Solution, Boolean> filterFunction = (Solution solution) -> Objects.equals(solution.getMatchedObservations(), 42);
+        return select(sc, fields, filterFunction);
     }
 
     private List<Solution> selectAll(JavaSparkContext sc) {
