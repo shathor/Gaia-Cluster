@@ -20,16 +20,16 @@ This setup focuses on a single node test cluster for your local machine. Using:
 
 * [Maven](https://maven.apache.org/) - Project and dependency management, build tool
 * [Apache Cassandra](http://cassandra.apache.org/) - A disributed, scalable NoSQL database
-  * For Windows user I recommend (Datastax)[https://www.datastax.com/2012/01/getting-started-with-apache-cassandra-on-windows-the-easy-way]
+  * For Windows user I recommend [Datastax](https://www.datastax.com/2012/01/getting-started-with-apache-cassandra-on-windows-the-easy-way)
 * [Apache Spark](http://spark.apache.org/) - A fast and general engine for large-scale data processing. Used as dependency, no need for installation.
 
 ### Data Import
-ESA released the first catalogue (Gaia DR 1)[https://www.cosmos.esa.int/web/gaia/release] the 14 September 2016.
-The data is available at their (archive page)[https://gea.esac.esa.int/archive/] in form of (CSV)[http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/] amongst other.
+ESA released the first catalogue [Gaia DR 1](https://www.cosmos.esa.int/web/gaia/release) the 14 September 2016.
+The data is available at their [archive page](https://gea.esac.esa.int/archive/) in form of [CSV](http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/) amongst other.
 
 The amount of data is huge. Around  1'142'727'643 rows, 57 columns each.
 
-To faciliate the data import into Cassandra, there is helper class: [DataImport](../blob/master/src/main/java/DataImport.java). Following steps are executed for all 5231 CSV files until finished:
+To faciliate the data import into Cassandra, there is helper class: [DataImport](../master/src/main/java/DataImport.java). Following steps are executed for all 5231 CSV files until finished:
 
 1. Download the next compressed CSV source file from Gaia archive
 2. Decompress the the CSV source file
@@ -48,11 +48,11 @@ provides some fault tolerance.
  
 Note that no checks are made for completeness or data integrity.
 
-For testing you can also setup the Cassandra database with some test data by using the Cassandra CQL Shell. An example script can be found in the [data folder](../blob/master/src/main/resources/data/cassandra_init.txt).
+For testing you can also setup the Cassandra database with some test data by using the Cassandra CQL Shell. An example script can be found in the [data folder](../master/src/main/resources/data/cassandra_init.txt).
 
 ### Configuration
 
-The cluster connections are configured in the [application.yaml](../blob/master/src/main/resources/config/application.yaml). It is both relevant for the cluster and the data importer:
+The cluster connections are configured in the [application.yaml](../master/src/main/resources/config/application.yaml). It is both relevant for the cluster and the data importer:
 
 ``` yaml
 spark:
@@ -67,7 +67,7 @@ cassandra:
  ```
 
 ### Executing queries
-The [GaiaClusterDemo](../blob/master/src/main/java/GaiaClusterDemo.java) shows how to start a Apache Spark context and some examples of querying the data.
+The [GaiaClusterDemo](../master/src/main/java/GaiaClusterDemo.java) shows how to start a Apache Spark context and some examples of querying the data.
 
 #### Starting the Apache Spark context:
 
