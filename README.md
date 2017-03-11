@@ -104,7 +104,7 @@ List<Field<?>> fields = Arrays.asList(Field.REF_EPOCH, Field.MATCHED_OBSERVATION
 
 #### In case you need all fields of a solution (one complete row):
 ``` java
-List<Field<?>> fields = Fields.values();
+List<Field<?>> fields = Arrays.asList(Field.values());
 ```
 
 
