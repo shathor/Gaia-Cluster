@@ -146,10 +146,17 @@ for(Solution solution : solutions) {
 }
 
 // calling get on the desired Field and passing the solution
-
 for(Solution solution : solutions) {
     LOG.info("Galactic Latitude: " + Field.B.get(solution)); // Field.B is the galactic latitude field
 }
+
+// also Field makes generic access possible
+for(Solution solution : solutions) {
+    for(Field<?> field : fields) {
+        LOG.info("Extracted: " + field.get(solution));
+    }
+}
+
 ```
 
 Note that the getters will return null, if they were not selected explicitely in the query (for performance reasons).
