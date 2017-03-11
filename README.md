@@ -92,7 +92,7 @@ private long selectCount(JavaSparkContext sc) {
 	String keyspace = Config.cassandra().keyspace();
 	String table = Config.cassandra().gaiasource();
 	return javaFunctions(sc)
-			.cassandraTable(keyspace, table, new SolutionRowReaderFactory(Field.SOLUTION_ID)) // using one of the primary key's.
+			.cassandraTable(keyspace, table, new SolutionRowReaderFactory(Field.SOLUTION_ID)) // using one of the primary keys.
 			.count();
 }
 ```
