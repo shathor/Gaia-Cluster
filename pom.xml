@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ch.inter.project</groupId>
+    <artifactId>gaia-cluster</artifactId>
+    <version>1.0</version>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Versions -->
+    <properties>
+        <log4j.version>1.2.17</log4j.version>
+        <lombok.version>1.16.14</lombok.version>
+        <cfg4j-core.version>4.4.0</cfg4j-core.version>
+        <commons-io.version>2.5</commons-io.version>
+        <commons-lang3.version>3.5</commons-lang3.version>
+        <jsoup.version>1.10.2</jsoup.version>
+        <univocity-parsers.version>2.3.1</univocity-parsers.version>
+        <spark.version>2.1.0</spark.version>
+        <spark-cassandra.version>2.0.0-RC1</spark-cassandra.version>
+        <spark-cassandra-java.version>1.6.0-M1</spark-cassandra-java.version>
+        <commons-codec.version>1.10</commons-codec.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Configuration Management -->
+        <dependency>
+            <groupId>org.cfg4j</groupId>
+            <artifactId>cfg4j-core</artifactId>
+            <version>${cfg4j-core.version}</version>
+        </dependency>
+
+        <!-- Apache Commons IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+
+        <!-- Apache Commons Lang -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <!-- JSoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
+        </dependency>
+
+        <!-- CSV Parser -->
+        <dependency>
+            <groupId>com.univocity</groupId>
+            <artifactId>univocity-parsers</artifactId>
+            <version>${univocity-parsers.version}</version>
+            <type>jar</type>
+        </dependency>
+
+        <!-- Apache Spark -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.10</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.10</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.10</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <!-- Apache Spark and Apache Cassandra integration -->
+        <dependency>
+            <groupId>com.datastax.spark</groupId>
+            <artifactId>spark-cassandra-connector_2.10</artifactId>
+            <version>${spark-cassandra.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.datastax.spark</groupId>
+            <artifactId>spark-cassandra-connector-java_2.10</artifactId>
+            <version>${spark-cassandra-java.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

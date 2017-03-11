@@ -1,0 +1,10 @@
+spark:
+  appname: GaiaCluster
+  master: local[4]
+  connectionHost: spark.cassandra.connection.host
+
+cassandra:
+  address: 127.0.0.1
+  keyspace: gaia_cluster
+  gaiasource: gaia_source
+
