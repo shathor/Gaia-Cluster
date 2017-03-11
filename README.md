@@ -140,7 +140,7 @@ Note that the JavaRDD class by Apache Spark allows all kinds of map-reduce funct
 
 #### Getting the desired values from returned solutions, there are two ways (Logging may only work on local machine):
 ``` java
-//  calling getters on solution
+// calling getters on solution
 for(Solution solution : solutions) {
     LOG.info("Galactic Latitude: " + solution.getGalacticLatitude());
 }
