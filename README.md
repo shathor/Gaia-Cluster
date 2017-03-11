@@ -1,0 +1,2 @@
+# gaia-cluster
+Provides a scaffold to easily build a cluster to query the data from ESA's Gaia satellite. Gaia is an ambitious mission to chart a three-dimensional map of our Galaxy, the Milky Way. Gaia will provide unprecedented positional and radial velocity measurements with the accuracies needed to produce a stereoscopic and kinematic census of about one billion stars in our Galaxy and throughout the Local Group. This amounts to about 1 per cent of the Galactic stellar population.
