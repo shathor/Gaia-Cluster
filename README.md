@@ -32,6 +32,7 @@ This setup focuses on a single node test cluster for your local machine. Using:
 * [Apache Spark](http://spark.apache.org/) - A fast and general engine for large-scale data processing. Used as dependency, no need for installation.
 * Checkout or download this project
 * Run `mvn clean install` on the top level directory to build it
+* Run `mvn exec:java -D exec.mainClass=GaiaClusterDemo` or `mvn exec:java -D exec.mainClass=DataImport`. Though recommended to import the project in your IDE and to develop and run the main classes from there.
 
 ### Data Import
 ESA released the first catalogue [Gaia DR 1](https://www.cosmos.esa.int/web/gaia/release) the 14 September 2016.
